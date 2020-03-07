@@ -58,8 +58,10 @@ class YandexMapsRequester:
         """"
         get transport data for stop_id in json
         """
-        self._config[PARAMS][ID_KEY] = f"stop__{stop_id}"
-        uri = f"ymapsbm1://transit/stop?id=stop__{stop_id}"
+        if 10 != len(stop_id):
+            stop_id = f"stop__{stop_id}"
+        self._config[PARAMS][ID_KEY] = f"{stop_id}"
+        uri = f"ymapsbm1://transit/stop?id={stop_id}"
         self._config[PARAMS][URI_KEY] = uri
         req = requests.get(
             self._config["uri"],
