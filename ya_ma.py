@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """ Yandex maps data requester"""
 
-__version__ = "0.3.8"
+__version__ = "0.3.9"
 __author__ = "Rishat Askarov"
 __author_email__ = "Rishatik92@gmail.com"
 __license__ = "MIT"
@@ -58,8 +58,10 @@ class YandexMapsRequester:
         """"
         get transport data for stop_id in json
         """
-        self._config[PARAMS][ID_KEY] = f"stop__{stop_id}"
-        uri = f"ymapsbm1://transit/stop?id=stop__{stop_id}"
+        if 10 != len(stop_id):
+            stop_id = f"stop__{stop_id}"
+        self._config[PARAMS][ID_KEY] = f"{stop_id}"
+        uri = f"ymapsbm1://transit/stop?id={stop_id}"
         self._config[PARAMS][URI_KEY] = uri
         req = requests.get(
             self._config["uri"],
